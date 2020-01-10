@@ -17,8 +17,9 @@ export default {
 </script>
 
 <style>
-
+ 
 #app {
-  margin-top: 40px;
+ font-family: 'Jura', sans-serif;  
+ letter-spacing: 0.02em;
 }
 </style>

@@ -1,29 +1,30 @@
 <template>
-  <div>
-
+  <div class="section">
     <div class="columns">
-      <h2 class="column has-background-success">Hellloooo</h2>
-      <h2 class="column has-background-warning">Heeeeee</h2>
-      <h2 class="column has-background-danger">Heeeeee</h2>
+      <div class="column has-background-black-ter"></div>
+      <div class="column has-background-grey-darker"></div>
+      <div class="column has-background-grey-dark"></div>
+      <div class="column has-background-grey-darker"></div>
+      <div class="column has-background-black-ter"></div>
     </div>
-    
-     <div id="mapid"></div>
-
+    <div>
+      <h1
+        class="title is-1 has-text-centered is-size-desktop has-text-black-bis"
+      >
+        Interactive Map
+      </h1>
+    </div>
+    <div id="mapid"></div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "Map",
-  data (){
-      return {
-           
-      }
+  data() {
+    return {};
   },
-  methods: {
-       
-  },
+  methods: {},
   props: {
     msg: String
   }
@@ -31,4 +32,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.section {
+  padding: 0.5rem 0.5rem;
+}
+</style>
