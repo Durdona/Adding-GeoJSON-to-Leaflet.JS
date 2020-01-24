@@ -15,9 +15,9 @@
       </h1>
     </div>
     <div class="columns">
-      <Forecast :forecast="forecast" />
+      <DataList :dataList="dataList" />
       <div id="mapid" class="column is-two-thirds">
-        <l-map :zoom="zoom" :center="center">
+        <l-map :zoom="zoom" :center="center" id="l-map">
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
 
           <l-geo-json
@@ -26,10 +26,11 @@
             :options-style="styleFunction"
           />
 
+          <l-circle :lat-lng="circle.center" :radius="circle.radius" />
           <l-marker
-            v-for="(forecasts, index) in forecast"
+            v-for="(dataLists, index) in dataList"
             v-bind:key="index"
-            :lat-lng="latLng(forecasts.latitude, forecasts.longitude)"
+            :lat-lng="latLng(dataLists.latitude, dataLists.longitude)"
           ></l-marker>
         </l-map>
       </div>
@@ -38,9 +39,10 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LGeoJson } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LGeoJson, LCircle } from "vue2-leaflet";
 import axios from "axios";
-import Forecast from "./Forecast.vue";
+import { latLng } from "leaflet";
+import DataList from "./DataList.vue";
 
 export default {
   name: "Map",
@@ -49,11 +51,12 @@ export default {
     LTileLayer,
     LMarker,
     LGeoJson,
-    Forecast
+    LCircle,
+    DataList
   },
   data() {
     return {
-      forecast: [],
+      dataList: [],
       zoom: 3,
       // eslint-disable-next-line no-undef
       center: L.latLng(47.41322, -1.219482),
@@ -62,6 +65,11 @@ export default {
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       // eslint-disable-next-line no-undef
       marker: L.latLng(47.41322, -1.219482),
+      circle: {
+        center: latLng(40.44074158649877, -79.99304294586182),
+        radius: 30000
+      },
+      color: "#ff00ff",
       enableTooltip: true,
       show: true,
       fillColor: "#e4ce7f",
@@ -74,12 +82,13 @@ export default {
             geometry: {
               type: "LineString",
               coordinates: [
-                [-80.87860107421875, 41.091772220976644],
-                [-80.5023193359375, 40.45948689837198],
-                [-79.77447509765625, 40.31513750307456],
-                [-79.63165283203125, 40.60769725157612],
-                [-80.53253173828124, 41.22411753058293],
-                [-80.8758544921875, 41.10212132036491]
+                [-80.8978271484375, 40.622291783092706],
+                [-80.1068115234375, 41.025499378313754],
+                [-79.288330078125, 40.68063802521456],
+                [-79.6563720703125, 40.03182061333687],
+                [-80.8978271484375, 39.86758762451019],
+                [-80.826416015625, 40.44276659332215],
+                [-80.88134765625, 40.59727063442024]
               ]
             }
           },
@@ -88,14 +97,13 @@ export default {
             properties: {},
             geometry: {
               type: "Point",
-              coordinates: [-80.1727294921875, 40.551374198715166]
+              coordinates: [-80.00244140625, 40.44694705960048]
             }
           }
         ]
       }
     };
   },
-
   computed: {
     options() {
       return {
@@ -132,7 +140,7 @@ export default {
   },
   mounted: function() {
     axios.get(" https://api.openbrewerydb.org/breweries").then(r => {
-      this.forecast = r.data;
+      this.dataList = r.data;
     });
   },
   methods: {
@@ -153,6 +161,12 @@ h1 {
   margin-bottom: 1rem;
 }
 #mapid {
-  height: 83vh;
+  height: 90vh;
+}
+#l-map {
+  border: 2px solid grey;
+}
+h1:hover {
+  font-weight: 900;
 }
 </style>
