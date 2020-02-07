@@ -8,11 +8,7 @@
       <div class="column has-background-black-ter"></div>
     </div>
     <div>
-      <h1
-        class="title is-1 has-text-centered is-size-desktop has-text-black-bis "
-      >
-        Interactive Map
-      </h1>
+      <h1 class="title is-1 has-text-centered is-size-desktop has-text-black-bis">Interactive Map</h1>
     </div>
     <div class="columns">
       <DataList :dataList="dataList" />
@@ -20,11 +16,7 @@
         <l-map :zoom="zoom" :center="center" id="l-map">
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
 
-          <l-geo-json
-            :geojson="geojson"
-            :options="options"
-            :options-style="styleFunction"
-          />
+          <l-geo-json :geojson="geojson" :options="options" :options-style="styleFunction" />
 
           <l-circle :lat-lng="circle.center" :radius="circle.radius" />
           <l-marker
